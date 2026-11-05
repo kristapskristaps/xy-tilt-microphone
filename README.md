@@ -5,7 +5,8 @@ when OP-XY is held upright. It requires the SDK's `codex/tilt-microphone` branch
 ([SDK pull request](https://github.com/etcetc000/open-xy/pull/424)).
 
 On the **external-audio Aux track's input page**, hold **Shift** to reveal the
-**tilt mic** overlay. Turn the **dark encoder** clockwise for **auto**, or
+centered **tilt mic** control, using the stock send popup and its animation.
+Turn the **dark encoder** clockwise for **auto**, or
 counterclockwise for **off**. Release Shift to return to the normal controls.
 Off is the default, and mode changes are remembered across reboots.
 **Shift + M1** also opens the Off/Auto selector; cancelling it changes nothing.
