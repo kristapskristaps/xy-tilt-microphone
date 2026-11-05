@@ -4,8 +4,8 @@
 namespace tiltmic {
 using namespace opxy;
 
-// OP-XY hardware calibration: face-up flat is +Z; the measured singing pose
-// points approximately along (-3,-4,0). Keep a directional cone around that pose.
+// OP-XY calibration: face-up flat is +Z. Any sufficiently upright direction
+// can monitor the mic, including passing it to a person on the opposite side.
 class Gesture {
     i32 x_ = 0, y_ = 0, z_ = 0;
     extensions::Time last_ = 0, since_ = 0;
@@ -36,15 +36,14 @@ public:
             y_ += (static_cast<i32>(motion.y) - y_) / 4;
             z_ += (static_cast<i32>(motion.z) - z_) / 4;
         }
-        // Scale before squaring: even 3*dot*dot fits signed 32-bit at every
+        // Scale before squaring: all squared terms fit signed 32-bit at every
         // signed-16-bit input, without target 64-bit multiplication helpers.
         const i32 x = x_ / 16, y = y_ / 16, z = z_ / 16;
         const i32 horizontal = x * x + y * y, vertical = z * z;
-        const i32 dot = -3 * x - 4 * y, side = 4 * x - 3 * y;
         if (horizontal + vertical < 16 * 16) { cancel(); return false; }
         const bool flat = z > 0 && horizontal <= vertical;
-        const bool raised = dot > 0 && dot * dot >= side * side && horizontal >= 3 * vertical;
-        const bool keep = dot > 0 && 3 * dot * dot >= side * side && horizontal > vertical;
+        const bool raised = horizontal >= 3 * vertical;
+        const bool keep = horizontal > vertical;
         if (!armed_) {
             if (held(flat, motion.time, 250000)) { armed_ = true; timing_ = false; }
             return false;

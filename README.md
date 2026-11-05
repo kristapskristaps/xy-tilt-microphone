@@ -1,38 +1,48 @@
-# Tilt microphone prototype
+# Tilt microphone
 
-An optional Open-XY extension that temporarily enables stock internal-microphone
-monitoring when the device is held upright. This development version requires
-the SDK branch `codex/tilt-microphone` in `../open-xy-tilt-microphone`.
+An optional Open-XY extension that temporarily monitors the internal microphone
+when OP-XY is held upright. It requires the SDK's `codex/tilt-microphone` branch
+([SDK pull request](https://github.com/etcetc000/open-xy/pull/424)).
 
-Select **mic** on the external-audio auxiliary track and set its gain, level,
-mix and effects. Start with headphones and a low input level. Include this
-extension in a development build to opt in; omit it to retain stock behavior.
+On the **external-audio Aux track**, press **Shift + M1** to open **tilt mic**.
+Choose **auto** to enable the gesture or **off** for ordinary manual monitoring.
+Off is the default. Confirming remembers this device preference across reboots;
+cancelling the selector leaves it unchanged. Select **mic** as the input and set
+its gain, level, mix and effects as usual. Begin testing with headphones and a
+low input level.
 
-Lay the device face-up flat for 250 ms to arm it, then raise it into the
-calibrated singing direction for 200 ms. Hardware measurements on an OP-XY
-running OS 1.2.1 gave +Z when face-up flat and approximately (-3,-4,0) in the
-singing pose. The direction gate rejects the measured opposite pose and side
-lifts. Activation starts around 60 degrees from flat; lowering below around
-45 degrees or turning away for 150 ms releases monitoring. These thresholds
-use the stock channels, which clip near full scale, rather than measured angles.
+Lay the device face-up flat for 250 ms to arm it, then hold it sufficiently
+upright for 200 ms. Any upright direction works: turn it around or pass it to
+another singer without lowering it. The approximate activation angle is
+60 degrees from flat; lowering below about 45 degrees for 150 ms releases it.
+The stock motion channels clip at full scale, so these are thresholds in sensor
+units rather than calibrated physical angles. Starting upright or face-down
+flat does not arm the gesture.
 
-The extension changes only the stock monitoring enable flag. It leaves the
-selected input, gain, levels, FX, sequencer and project parameters under stock
-control. Sampling, project changes, unavailable input, a manual monitoring stop
-or a long controller gap cancel the request. Already-active manual monitoring
-is never acquired or switched off. A cancelled gesture needs a flat pose before
+The SDK fades automatic monitoring in over 50 ms and out over 200 ms. On the
+Aux input track, short native popups confirm live/idle transitions. It keeps
+the selected input, gain, levels, FX, sequencer and project controls intact.
+Sampling, project changes, unavailable input, a manual monitoring stop or a
+long controller gap cancel the request. Already-active manual monitoring is
+never acquired or switched off. A cancelled gesture needs a flat pose before
 it can activate again. Stock microphone feedback protections still apply.
 
-This prototype does not provide a persistent device setting, an active-mic
-overlay or its own fade. Native audio transitions follow stock behavior. A
-host test or successful firmware build does not establish hardware acceptance.
+The previous one-direction prototype passed an initial headphone listening test.
+This version's direction changes, menu, persistence and fades need a new hardware
+pass; see [QA.md](QA.md). Host tests and a firmware build do not establish device
+acceptance.
 
-Test:
+## Develop
+
+The extension's source and tests live here; stock calls, settings, UI and audio
+integration belong to the separate SDK change. Run:
 
 ```sh
 python3 ../open-xy-tilt-microphone/sdk.py test --extension .
 ```
 
-Build with `--extension /absolute/path/to/xy-tilt-microphone` alongside a
-machine, using fresh firmware output folders outside every checkout. Follow
-the SDK build guide and the device checklist in QA.md.
+Build with `--extension /absolute/path/to/xy-tilt-microphone` alongside the
+intended machine collection and its current layout. Use fresh firmware output
+folders outside every checkout. The SDK build guide describes installation.
+The optional [calibration extension](calibration/README.md) observes motion
+without requesting microphone monitoring.
