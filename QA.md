@@ -1,13 +1,17 @@
 # Device checklist
 
-Hardware validation is pending. Record the exact SDK commit, extension commit,
+Motion calibration has started; microphone/audio hardware validation is pending. Record the exact SDK commit, extension commit,
 firmware SHA-256 and device layout before testing this build.
 Rebuild with the intended collection and the current device's `layout.json`
 before installation; the minimal FM2op development package is not a replacement
 for the user's installed collection.
 
-- Confirm motion axes/signs with a diagnostic build in flat, mic-side-up,
-  opposite-side-up and inverted poses. Check stationary readings and update rate.
+- Confirm motion axes/signs with a diagnostic build. Direct USB measurements on
+  2026-11-05: face-up flat (0,1024,32767), singing (-18880,-26176,-384), opposite
+  (-22912,24256,-512), each the median of 60 samples over three seconds.
+  Controller callbacks were about 1.4 ms apart; USB telemetry sampled at 20 Hz.
+  This does not establish the sensor's own update rate or calibrated degrees.
+  Inverted pose and direction rejection still need device checks.
 - With headphones, mic selected and low gain, verify that playback continues
   while raising/lowering starts/stops live mic monitoring without clicks.
 - Check the angle thresholds and dwell times; waving, transport vibration,

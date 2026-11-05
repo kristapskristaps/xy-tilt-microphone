@@ -8,12 +8,13 @@ Select **mic** on the external-audio auxiliary track and set its gain, level,
 mix and effects. Start with headphones and a low input level. Include this
 extension in a development build to opt in; omit it to retain stock behavior.
 
-Lay the device flat for 250 ms to arm it, then tilt it beyond approximately
-60 degrees for 200 ms. Lower it below approximately 45 degrees for 150 ms to
-release monitoring. These angles assume the third stock channel is the plane
-normal: the physical axis mapping, sensor scale and timing need hardware QA.
-The prototype intentionally accepts either edge; the final mic-side direction
-must be selected after measuring the sensor axes on the device.
+Lay the device face-up flat for 250 ms to arm it, then raise it into the
+calibrated singing direction for 200 ms. Hardware measurements on an OP-XY
+running OS 1.2.1 gave +Z when face-up flat and approximately (-3,-4,0) in the
+singing pose. The direction gate rejects the measured opposite pose and side
+lifts. Activation starts around 60 degrees from flat; lowering below around
+45 degrees or turning away for 150 ms releases monitoring. These thresholds
+use the stock channels, which clip near full scale, rather than measured angles.
 
 The extension changes only the stock monitoring enable flag. It leaves the
 selected input, gain, levels, FX, sequencer and project parameters under stock

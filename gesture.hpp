@@ -4,8 +4,8 @@
 namespace tiltmic {
 using namespace opxy;
 
-// Initial pose classifier: either short/long edge upright. Device QA must
-// establish the mic-side axis/sign before narrowing it to the singing pose.
+// OP-XY hardware calibration: face-up flat is +Z; the measured singing pose
+// points approximately along (-3,-4,0). Keep a directional cone around that pose.
 class Gesture {
     i32 x_ = 0, y_ = 0, z_ = 0;
     extensions::Time last_ = 0, since_ = 0;
@@ -36,22 +36,22 @@ public:
             y_ += (static_cast<i32>(motion.y) - y_) / 4;
             z_ += (static_cast<i32>(motion.z) - z_) / 4;
         }
-        // Divide before squaring: every sum and 3*vertical fits signed 32-bit,
-        // including saturated sensor input, without target 64-bit multiplies.
-        const i32 x = x_ / 4, y = y_ / 4, z = z_ / 4;
-        const i32 horizontal = x * x + y * y;
-        const i32 vertical = z * z;
-        if (horizontal + vertical < 64 * 64) { cancel(); return false; }
-        const bool flat = horizontal <= vertical;
+        // Scale before squaring: even 3*dot*dot fits signed 32-bit at every
+        // signed-16-bit input, without target 64-bit multiplication helpers.
+        const i32 x = x_ / 16, y = y_ / 16, z = z_ / 16;
+        const i32 horizontal = x * x + y * y, vertical = z * z;
+        const i32 dot = -3 * x - 4 * y, side = 4 * x - 3 * y;
+        if (horizontal + vertical < 16 * 16) { cancel(); return false; }
+        const bool flat = z > 0 && horizontal <= vertical;
+        const bool raised = dot > 0 && dot * dot >= side * side && horizontal >= 3 * vertical;
+        const bool keep = dot > 0 && 3 * dot * dot >= side * side && horizontal > vertical;
         if (!armed_) {
             if (held(flat, motion.time, 250000)) { armed_ = true; timing_ = false; }
             return false;
         }
         if (!active_) {
-            if (held(horizontal >= 3 * vertical, motion.time, 200000)) {
-                active_ = true; timing_ = false;
-            }
-        } else if (held(flat, motion.time, 150000)) {
+            if (held(raised, motion.time, 200000)) { active_ = true; timing_ = false; }
+        } else if (held(!keep, motion.time, 150000)) {
             active_ = false; timing_ = false;
         }
         return active_;

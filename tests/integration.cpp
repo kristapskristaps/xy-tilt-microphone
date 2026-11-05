@@ -20,16 +20,16 @@ void pose(i16 x, i16 y, i16 z, u32 milliseconds) {
 }
 int main() {
     pose(0,0,16384,500);
-    pose(16384,0,0,500);
+    pose(-18880,-26176,-384,500);
     require(requested, "extension must renew monitoring while raised");
     permitted = false;
-    pose(16384,0,0,100);
+    pose(-18880,-26176,-384,100);
     require(!requested, "denied monitoring must cancel the gesture");
     permitted = true;
-    pose(16384,0,0,500);
+    pose(-18880,-26176,-384,500);
     require(!requested, "permission recovery must require lowering first");
     pose(0,0,16384,500);
-    pose(16384,0,0,500);
+    pose(-18880,-26176,-384,500);
     require(requested, "lowering must allow a new gesture after denial");
     pose(0,0,16384,500);
     require(!requested, "extension must release when lowered");
