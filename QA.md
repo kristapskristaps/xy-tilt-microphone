@@ -24,7 +24,10 @@ for the user's installed collection.
   Upright activation in both directions and face-down arming rejection still
   need checks on this version.
 - With no saved preference, verify Off is the default and raising stays silent.
-- On the external-audio Aux track, open Shift + M1: confirm Off/Auto, cancel a
+- On the external-audio Aux input page, hold Shift: confirm the tilt mic
+  overlay appears, dark encoder selects Off/Auto, and releasing Shift hides it.
+  Other encoders and unshifted input controls must retain their stock behavior.
+- Open Shift + M1: confirm Off/Auto, cancel a
   changed highlight, confirm Auto, then reboot and verify it is remembered.
   Check the existing CV machine chooser and send-effect menus still work.
 - Enable Auto while already upright: it must wait for a flat pose before arming.

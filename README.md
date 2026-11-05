@@ -4,12 +4,13 @@ An optional Open-XY extension that temporarily monitors the internal microphone
 when OP-XY is held upright. It requires the SDK's `codex/tilt-microphone` branch
 ([SDK pull request](https://github.com/etcetc000/open-xy/pull/424)).
 
-On the **external-audio Aux track**, press **Shift + M1** to open **tilt mic**.
-Choose **auto** to enable the gesture or **off** for ordinary manual monitoring.
-Off is the default. Confirming remembers this device preference across reboots;
-cancelling the selector leaves it unchanged. Select **mic** as the input and set
-its gain, level, mix and effects as usual. Begin testing with headphones and a
-low input level.
+On the **external-audio Aux track's input page**, hold **Shift** to reveal the
+**tilt mic** overlay. Turn the **dark encoder** clockwise for **auto**, or
+counterclockwise for **off**. Release Shift to return to the normal controls.
+Off is the default, and mode changes are remembered across reboots.
+**Shift + M1** also opens the Off/Auto selector; cancelling it changes nothing.
+Select **mic** as the input and set its gain, level, mix and effects as usual.
+Begin testing with headphones and a low input level.
 
 Lay the device face-up flat for 250 ms to arm it, then hold it sufficiently
 upright for 200 ms. Any upright direction works: turn it around or pass it to
