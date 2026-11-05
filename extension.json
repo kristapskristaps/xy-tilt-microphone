@@ -1,0 +1,8 @@
+{
+  "id": "tiltmic",
+  "name": "Tilt microphone",
+  "description": "Raise OP-XY to monitor its internal mic; lower it to release monitoring. Select mic on the external-audio track first.",
+  "note": "Development prototype: motion orientation and timing still need device validation.",
+  "claims": [],
+  "actions": ["monitor_input"]
+}
