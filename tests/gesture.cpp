@@ -33,11 +33,11 @@ int main() {
     require(d.sing(400), "measured held singing pose must activate");
     require(d.pose(-14400, -19200, 18000, 400), "middle angle must preserve active state");
     require(!d.pose(0, 1024, 32767, 500), "lowering must release monitoring");
-    require(!d.pose(-22912, 24256, -512, 700), "measured opposite tilt must not activate");
-    require(!d.pose(-32768, 0, 0, 700), "sideways tilt must not activate");
-    require(!d.pose(32767, 0, 0, 700), "other sideways tilt must not activate");
+    require(d.pose(-22912, 24256, -512, 700), "measured opposite tilt must activate");
+    require(d.pose(-32768, 0, 0, 700), "upright side tilt must activate");
+    require(d.pose(32767, 0, 0, 700), "other upright side must activate");
     require(d.sing(), "return to the singing direction must activate");
-    require(!d.pose(-22912, 24256, -512, 500), "turning away must release monitoring");
+    require(d.pose(-22912, 24256, -512, 500), "passing to the opposite singer must stay active");
     d.gesture.cancel(); d.input.active = d.input.owned = false;
     require(!d.sing(700), "cancellation must require lowering before rearming");
     d.arm();
@@ -59,7 +59,7 @@ int main() {
     require(!inverted.pose(0,0,-32768,700) && !inverted.sing(), "face-down flat must not arm");
     Driver extreme; extreme.arm();
     require(extreme.pose(-32768,-32768,0,700), "extreme signed axes must not overflow");
-    require(!extreme.pose(32767,32767,-32768,700), "extreme wrong direction must release");
+    require(!extreme.pose(0,0,-32768,700), "face-down flat must release");
     Driver hardware_rate; hardware_rate.interval = 1420; hardware_rate.arm();
     require(!hardware_rate.sing(100) && hardware_rate.sing(300), "dwell time must hold at measured callback rate");
     require(!hardware_rate.pose(0,1024,32767,300), "lowering must release at measured callback rate");
