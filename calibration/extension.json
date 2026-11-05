@@ -1,0 +1,7 @@
+{
+  "id": "tiltcal",
+  "name": "Tilt calibration",
+  "description": "Read motion axes and controller timing with Record while stopped. Does not request microphone monitoring.",
+  "claims": ["record_double_tap"],
+  "actions": ["notify"]
+}
