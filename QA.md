@@ -1,17 +1,29 @@
 # Device checklist
 
-The current Off/Auto and fade implementation is ready for a new hardware pass;
-the initial result below applies to the earlier one-direction prototype.
+The owner approved the centered native Shift popup on an OP-XY on 2026-11-05:
+only `tilt mic` and Off/Auto appeared, the dark encoder changed the caption,
+and releasing Shift dismissed it cleanly. The stock container and entrance
+animation were also accepted. USB telemetry confirmed normal startup, the
+monitoring extension and valid motion readings.
+
+Tested firmware:
+`c659def080d75e95595790db49a661d66aa36c15a15fbde9d39f8cfb078e6cf5`.
+Public SDK `d74d2f1`, private hardware integration `76cd08b`, extension
+`7079420`, machine sources `8e45cee`. This combined image retained all 26
+Hundekraft/Halo machines, their source hashes and IDs, layout, content,
+profiling mode and sweep flag from the device's preceding build.
+The remaining checks below cover audio behavior and interactions; approval of
+the popup does not establish those results.
 
 Initial motion calibration and a headphone listening test passed on 2026-11-05.
 The user confirmed audible mic activation when raised, release when lowered,
-and no clicks or feedback; smoother transitions are still requested. Playback
-with music, manual overrides and the remaining checklist are not yet accepted.
+and no clicks or feedback. The latest fades with music, manual overrides and
+the remaining checklist still need their device pass.
 Tested SDK a81579c, extension ede5971, firmware
 `e9dacef22bd439aea4bd0c8929d81771944000f2479c245daed8aaf544cb04bf`.
 The earlier installed build used one calibrated singing direction. Record the
-exact new SDK commit, extension commit, firmware SHA-256 and device layout
-before testing this version.
+exact SDK/extension commits, firmware SHA-256 and device layout for each new
+hardware pass.
 Rebuild with the intended collection and the current device's `layout.json`
 before installation; the minimal FM2op development package is not a replacement
 for the user's installed collection.
@@ -24,11 +36,9 @@ for the user's installed collection.
   Upright activation in both directions and face-down arming rejection still
   need checks on this version.
 - With no saved preference, verify Off is the default and raising stays silent.
-- On the external-audio Aux input page, hold Shift: confirm the tilt mic
-  centered stock send container appears with its native animation, dark encoder
-  selects Off/Auto, and releasing Shift hides it. Reopening must replay the
-  animation, including after leaving the input page.
-  Other encoders and unshifted input controls must retain their stock behavior.
+- Reopen the popup after leaving and returning to the input page: its native
+  animation must restart. Other encoders and unshifted input controls must
+  retain their stock behavior.
 - Open Shift + M1: confirm Off/Auto, cancel a
   changed highlight, confirm Auto, then reboot and verify it is remembered.
   Check the existing CV machine chooser and send-effect menus still work.
