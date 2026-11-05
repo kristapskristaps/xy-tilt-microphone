@@ -1,6 +1,14 @@
 # Device checklist
 
-Motion calibration has started; microphone/audio hardware validation is pending. Record the exact SDK commit, extension commit,
+Initial motion calibration and a headphone listening test passed on 2026-11-05.
+The user confirmed audible mic activation when raised, release when lowered,
+and no clicks or feedback; smoother transitions are still requested. Playback
+with music, manual overrides and the remaining checklist are not yet accepted.
+Tested SDK a81579c, extension ede5971, firmware
+`e9dacef22bd439aea4bd0c8929d81771944000f2479c245daed8aaf544cb04bf`.
+The installed build still uses one calibrated singing direction. The requested
+next iteration accepts either direction when sufficiently upright and provides
+an explicit enable/disable control. Record the exact SDK commit, extension commit,
 firmware SHA-256 and device layout before testing this build.
 Rebuild with the intended collection and the current device's `layout.json`
 before installation; the minimal FM2op development package is not a replacement
