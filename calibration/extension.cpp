@@ -16,7 +16,7 @@ char* number(char* out, i32 value) {
     while (count) *out++ = digits[--count];
     return out;
 }
-void motion(const Motion& position, const InputMonitor& input, const Actions&) {
+void motion(const Motion& position, const InputMonitor& input, const MotionActions&) {
     if (latest.time && position.time >= latest.time) {
         const Time delta = position.time - latest.time;
         interval = delta > 999999 ? 999999 : static_cast<u32>(delta);
@@ -45,5 +45,6 @@ void control(const Context& context, const Control& key, const Actions& actions)
     status = !status;
 }
 }
-extern constexpr Hooks hooks = Hooks().with_motion(motion).with_queued_control(control);
+extern constexpr Hooks hooks = Hooks().with_queued_control(control);
+extern constexpr MotionHooks motion_hooks = {motion, nullptr};
 }}}

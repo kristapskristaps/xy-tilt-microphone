@@ -6,5 +6,6 @@
   "claims": [],
   "actions": [
     "monitor_input"
-  ]
+  ],
+  "motion": true
 }

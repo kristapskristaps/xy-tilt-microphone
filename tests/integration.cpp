@@ -10,12 +10,12 @@ void require(bool condition, const char* message) {
     if (!condition) { std::fprintf(stderr, "%s\n", message); std::exit(1); }
 }
 bool monitor(bool enabled) { requested = permitted && enabled; return permitted; }
-const Actions actions = {nullptr, nullptr, nullptr, monitor};
+const MotionActions actions = {monitor};
 void pose(i16 x, i16 y, i16 z, u32 milliseconds) {
     for (u32 i = 0; i < milliseconds; i += 10) {
         now += 10000;
         const InputMonitor input = {requested, requested, true};
-        opxy::extensions::tiltmic::hooks.motion({x,y,z,now,true}, input, actions);
+        opxy::extensions::tiltmic::motion_hooks.motion({x,y,z,now,true}, input, actions);
     }
 }
 int main() {
