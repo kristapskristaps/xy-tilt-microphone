@@ -12,5 +12,5 @@ void motion(const Motion& position, const InputMonitor& input, const Actions& ac
 constexpr InputMonitorText monitor_text = {
     "tilt mic", {"off", "auto"}, "tilt mic idle", "tilt mic live", "tilt mic save failed",
 };
-extern constexpr Hooks hooks = Hooks().with_motion(motion).with_monitor_text(monitor_text);
+extern constexpr Hooks hooks = Hooks().with_motion(motion).using_monitor_text(monitor_text);
 }}}
