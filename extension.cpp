@@ -9,5 +9,8 @@ void motion(const Motion& position, const InputMonitor& input, const Actions& ac
     if (!actions.monitor_input(requested) && requested) gesture.cancel();
 }
 }
-extern constexpr Hooks hooks = Hooks().with_motion(motion);
+constexpr InputMonitorText monitor_text = {
+    "tilt mic", {"off", "auto"}, "tilt mic idle", "tilt mic live", "tilt mic save failed",
+};
+extern constexpr Hooks hooks = Hooks().with_motion(motion).with_monitor_text(monitor_text);
 }}}
